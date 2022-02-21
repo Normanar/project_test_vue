@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="app">
     <select v-model="selected" class="select">
       <option v-for="country in countries" v-bind:key="country.id">{{ country }}</option>
     </select>
@@ -14,9 +14,8 @@
       </select>
       <span v-if="selectedYearEnd <= selectedYearStart" class="error">First year must be less than the second year!</span>
     </div>
-    <div class="text">CO<sub>2</sub><br>emissions (kt)</div>
+    <div class="text">CO<sub>2</sub> emissions(kt) graphics in {{selected}} from {{selectedYearStart}} to {{selectedYearEnd}}</div>
     <LineChart :data="arr"/>
-    {{ selected }}
   </div>
 </template>
 
@@ -55,6 +54,7 @@ export default {
       // this.arr = newArr.slice(0, -3)
       const newArrYears = newArr.slice(0, -3)
       this.arr = newArrYears.slice((+this.selectedYearStart) - 1960, 61 - (2020 - (+this.selectedYearEnd)))
+
     }
   }
 }
@@ -115,10 +115,16 @@ export default {
   margin-left: 15px;
 }
 
-/*.text {*/
-/*  text-align: center;*/
-/*  transform: rotate(-90deg);*/
-/*  */
-/*}*/
+.app {
+}
+
+.text {
+  text-align: center;
+  color: teal;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 10px 0;
+
+}
 
 </style>

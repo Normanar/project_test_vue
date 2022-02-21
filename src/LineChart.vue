@@ -11,15 +11,6 @@
       <Grid strokeDasharray="2,2" />
       <Line :dataKeys="['year', 'emission']" />
     </template>
-    <template #widgets>
-      <Tooltip
-          borderColor="#48CAE4"
-          :config="{
-          year: { color: '#0077b6' },
-          emission: { label: 'averange', color: 'red' },
-        }"
-      />
-    </template>
 
   </Chart>
 </template>
