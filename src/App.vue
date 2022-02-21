@@ -14,8 +14,8 @@
       </select>
       <span v-if="selectedYearEnd <= selectedYearStart" class="error">First year must be less than the second year!</span>
     </div>
-    <div class="text">CO<sub>2</sub> emissions(kt) graphics in {{selected}} from {{selectedYearStart}} to {{selectedYearEnd}}</div>
-    <LineChart :data="arr"/>
+    <div class="text">CO<sub>2</sub> emissions(kt) in {{selected}} from {{selectedYearStart}} to {{selectedYearEnd}}</div>
+    <LineChart :data="arr" :checked="checked"/>
   </div>
 </template>
 
@@ -36,6 +36,7 @@ export default {
       yearsEnd: yearArrEnd,
       selectedYearStart: "1960",
       selectedYearEnd: "2020",
+      checked : false
     }
 
   },
@@ -50,8 +51,6 @@ export default {
       for (let i = 0; i < keys.length - 1; i++) {
         newArr.push({year: keys[i], emission: values[i]})
       }
-      // this.data_new = newArr.slice(0, -3)
-      // this.arr = newArr.slice(0, -3)
       const newArrYears = newArr.slice(0, -3)
       this.arr = newArrYears.slice((+this.selectedYearStart) - 1960, 61 - (2020 - (+this.selectedYearEnd)))
 

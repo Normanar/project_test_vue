@@ -8,7 +8,7 @@
   >
 
     <template #layers>
-      <Grid strokeDasharray="2,2" />
+      <Grid strokeDasharray="42,2"/>
       <Line :dataKeys="['year', 'emission']" />
     </template>
 
@@ -39,7 +39,6 @@ export default defineComponent({
 
 <style>
 .chart {
-  /*background-color: teal;*/
   color: teal;
   font-weight: bold;
 }
