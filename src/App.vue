@@ -17,7 +17,6 @@
     <div class="text">CO<sub>2</sub> emissions(kt) in {{selected}} from {{selectedYearStart}} to {{selectedYearEnd}}</div>
     <LineChart :data="arr" :width="width"/>
   </div>
-  {{width}}
 </template>
 
 <script>
