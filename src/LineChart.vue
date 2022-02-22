@@ -1,6 +1,6 @@
 <template>
   <Chart
-      :size="{ width: 1600, height: 450 }"
+      :size="{ width: this.width > 50 ? 1600 : 1300, height: 450 }"
       :data="data"
       :margin="margin"
       :direction="direction"
@@ -22,6 +22,11 @@ import { Chart, Line, Grid } from 'vue3-charts'
 export default defineComponent({
   name: 'LineChart',
   components: { Chart, Line, Grid },
+  props : {
+    width: {
+      required : true,
+    }
+  },
   setup() {
 
     const direction = ref('horizontal')

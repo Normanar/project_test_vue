@@ -1,22 +1,23 @@
 <template>
   <div id="app" class="app">
-    <select v-model="selected" class="select">
+    <select v-model="selected" class="select" v-on:change="showBtn">
       <option v-for="country in countries" v-bind:key="country.id">{{ country }}</option>
     </select>
-    <button v-on:click="showBtn" class="btn">Show</button>
+<!--    <button v-on:click="showBtn" class="btn">Show</button>-->
     <div>
-      <select v-model="selectedYearStart" class="select_year_1">
+      <select v-model="selectedYearStart" class="select_year_1" v-on:change="showBtn">
         <option v-for="year in yearsStart" v-bind:key="year.id">{{ year }}</option>
       </select>
       -
-      <select v-model="selectedYearEnd" class="select_year_2">
+      <select v-model="selectedYearEnd" class="select_year_2" v-on:change="showBtn">
         <option v-for="year in yearsEnd" v-bind:key="year.id">{{ year }}</option>
       </select>
       <span v-if="selectedYearEnd <= selectedYearStart" class="error">First year must be less than the second year!</span>
     </div>
     <div class="text">CO<sub>2</sub> emissions(kt) in {{selected}} from {{selectedYearStart}} to {{selectedYearEnd}}</div>
-    <LineChart :data="arr"/>
+    <LineChart :data="arr" :width="width"/>
   </div>
+  {{width}}
 </template>
 
 <script>
@@ -26,6 +27,9 @@ import dataOfCO2 from './dataCO2/Выбросы CO2 по годам и стра�
 
 export default {
   components: {LineChart},
+  mounted() {
+    this.showBtn()
+  },
   data() {
     return {
       data_new: dataOfCO2,
@@ -36,6 +40,7 @@ export default {
       yearsEnd: yearArrEnd,
       selectedYearStart: "1960",
       selectedYearEnd: "2020",
+      width: 0
     }
 
   },
@@ -52,6 +57,7 @@ export default {
       }
       const newArrYears = newArr.slice(0, -3)
       this.arr = newArrYears.slice((+this.selectedYearStart) - 1960, 61 - (2020 - (+this.selectedYearEnd)))
+      this.width = (+this.selectedYearEnd) - (+this.selectedYearStart)
 
     }
   }
@@ -68,21 +74,21 @@ export default {
   font-weight: bold;
 }
 
-.btn {
-  background: none;
-  border: 2px solid teal;
-  padding: 8px 10px;
-  color: teal;
-  font-weight: bold;
-  margin-left: 15px;
-  border-radius: 5px;
-}
+/*.btn {*/
+/*  background: none;*/
+/*  border: 2px solid teal;*/
+/*  padding: 8px 10px;*/
+/*  color: teal;*/
+/*  font-weight: bold;*/
+/*  margin-left: 15px;*/
+/*  border-radius: 5px;*/
+/*}*/
 
-.btn:hover {
-  background-color: teal;
-  color: antiquewhite;
-  cursor: pointer;
-}
+/*.btn:hover {*/
+/*  background-color: teal;*/
+/*  color: antiquewhite;*/
+/*  cursor: pointer;*/
+/*}*/
 
 .select_year_1 {
   outline: none;
