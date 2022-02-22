@@ -3,7 +3,7 @@
     <select v-model="selected" class="select">
       <option v-for="country in countries" v-bind:key="country.id">{{ country }}</option>
     </select>
-    <button v-on:click="goBtn" class="btn">Show</button>
+    <button v-on:click="showBtn" class="btn">Show</button>
     <div>
       <select v-model="selectedYearStart" class="select_year_1">
         <option v-for="year in yearsStart" v-bind:key="year.id">{{ year }}</option>
@@ -15,12 +15,12 @@
       <span v-if="selectedYearEnd <= selectedYearStart" class="error">First year must be less than the second year!</span>
     </div>
     <div class="text">CO<sub>2</sub> emissions(kt) in {{selected}} from {{selectedYearStart}} to {{selectedYearEnd}}</div>
-    <LineChart :data="arr" :checked="checked"/>
+    <LineChart :data="arr"/>
   </div>
 </template>
 
 <script>
-import {countriesNew, yearArrStart, yearArrEnd} from './data'
+import {countriesList, yearArrStart, yearArrEnd} from './data'
 import LineChart from "@/LineChart";
 import dataOfCO2 from './dataCO2/Выбросы CO2 по годам и странам.json'
 
@@ -29,27 +29,26 @@ export default {
   data() {
     return {
       data_new: dataOfCO2,
-      countries: countriesNew,
+      countries: countriesList,
       selected: 'Aruba',
       arr: [{year: '', emission: 0},],
       yearsStart: yearArrStart,
       yearsEnd: yearArrEnd,
       selectedYearStart: "1960",
       selectedYearEnd: "2020",
-      checked : false
     }
 
   },
   methods: {
-    goBtn() {
+    showBtn() {
 
       const index = this.countries.indexOf(this.selected)
       const arr = this.data_new[index]
-      const keys = Object.keys(arr)
-      const values = Object.values(arr)
+      const keysYears = Object.keys(arr)
+      const valuesEmission = Object.values(arr)
       const newArr = []
-      for (let i = 0; i < keys.length - 1; i++) {
-        newArr.push({year: keys[i], emission: values[i]})
+      for (let i = 0; i < keysYears.length - 1; i++) {
+        newArr.push({year: keysYears[i], emission: valuesEmission[i]})
       }
       const newArrYears = newArr.slice(0, -3)
       this.arr = newArrYears.slice((+this.selectedYearStart) - 1960, 61 - (2020 - (+this.selectedYearEnd)))
